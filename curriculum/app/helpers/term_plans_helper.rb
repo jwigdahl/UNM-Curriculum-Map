@@ -1,0 +1,2 @@
+module TermPlansHelper
+end

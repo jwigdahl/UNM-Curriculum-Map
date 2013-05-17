@@ -1,0 +1,29 @@
+<h1>Listing degree_plans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Undergrad program</th>
+      <th>Academic year</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @degree_plans.each do |degree_plan| %>
+      <tr>
+        <td><%= degree_plan.undergrad_program_id %></td>
+        <td><%= degree_plan.academic_year %></td>
+        <td><%= link_to 'Show', degree_plan %></td>
+        <td><%= link_to 'Edit', edit_degree_plan_path(degree_plan) %></td>
+        <td><%= link_to 'Destroy', degree_plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Degree plan', new_degree_plan_path %>

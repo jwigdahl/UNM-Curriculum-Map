@@ -1,0 +1,29 @@
+<h1>Listing degree_plan_notes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Degree plan</th>
+      <th>Note</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @degree_plan_notes.each do |degree_plan_note| %>
+      <tr>
+        <td><%= degree_plan_note.degree_plan_id %></td>
+        <td><%= degree_plan_note.note %></td>
+        <td><%= link_to 'Show', degree_plan_note %></td>
+        <td><%= link_to 'Edit', edit_degree_plan_note_path(degree_plan_note) %></td>
+        <td><%= link_to 'Destroy', degree_plan_note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Degree plan note', new_degree_plan_note_path %>

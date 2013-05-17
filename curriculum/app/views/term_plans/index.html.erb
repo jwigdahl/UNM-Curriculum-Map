@@ -1,0 +1,29 @@
+<h1>Listing term_plans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Degree plan</th>
+      <th>Term number</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @term_plans.each do |term_plan| %>
+      <tr>
+        <td><%= term_plan.degree_plan_id %></td>
+        <td><%= term_plan.term_number %></td>
+        <td><%= link_to 'Show', term_plan %></td>
+        <td><%= link_to 'Edit', edit_term_plan_path(term_plan) %></td>
+        <td><%= link_to 'Destroy', term_plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Term plan', new_term_plan_path %>

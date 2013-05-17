@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Degree plan:</strong>
+  <%= @term_plan.degree_plan_id %>
+</p>
+
+<p>
+  <strong>Term number:</strong>
+  <%= @term_plan.term_number %>
+</p>
+
+<%= link_to 'Edit', edit_term_plan_path(@term_plan) %> |
+<%= link_to 'Back', term_plans_path %>

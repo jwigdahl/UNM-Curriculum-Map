@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Degree plan:</strong>
+  <%= @degree_plan_note.degree_plan_id %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @degree_plan_note.note %>
+</p>
+
+<%= link_to 'Edit', edit_degree_plan_note_path(@degree_plan_note) %> |
+<%= link_to 'Back', degree_plan_notes_path %>

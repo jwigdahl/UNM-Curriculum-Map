@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Degree plan:</strong>
+  <%= @degree_requirement.degree_plan_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @degree_requirement.name %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @degree_requirement.category %>
+</p>
+
+<p>
+  <strong>Min grade:</strong>
+  <%= @degree_requirement.min_grade %>
+</p>
+
+<p>
+  <strong>Crucial:</strong>
+  <%= @degree_requirement.crucial %>
+</p>
+
+<p>
+  <strong>Note:</strong>
+  <%= @degree_requirement.note %>
+</p>
+
+<%= link_to 'Edit', edit_degree_requirement_path(@degree_requirement) %> |
+<%= link_to 'Back', degree_requirements_path %>

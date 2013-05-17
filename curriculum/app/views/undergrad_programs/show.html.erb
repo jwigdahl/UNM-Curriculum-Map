@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Dept:</strong>
+  <%= @undergrad_program.dept_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @undergrad_program.name %>
+</p>
+
+<p>
+  <strong>Degree:</strong>
+  <%= @undergrad_program.degree %>
+</p>
+
+<p>
+  <strong>Org code:</strong>
+  <%= @undergrad_program.org_code %>
+</p>
+
+<%= link_to 'Edit', edit_undergrad_program_path(@undergrad_program) %> |
+<%= link_to 'Back', undergrad_programs_path %>

@@ -1,0 +1,33 @@
+<h1>Listing undergrad_programs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Dept</th>
+      <th>Name</th>
+      <th>Degree</th>
+      <th>Org code</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @undergrad_programs.each do |undergrad_program| %>
+      <tr>
+        <td><%= undergrad_program.dept_id %></td>
+        <td><%= undergrad_program.name %></td>
+        <td><%= undergrad_program.degree %></td>
+        <td><%= undergrad_program.org_code %></td>
+        <td><%= link_to 'Show', undergrad_program %></td>
+        <td><%= link_to 'Edit', edit_undergrad_program_path(undergrad_program) %></td>
+        <td><%= link_to 'Destroy', undergrad_program, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Undergrad program', new_undergrad_program_path %>

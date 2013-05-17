@@ -1,0 +1,114 @@
+Create the application:
+	$ mkdir curriculum
+	$ cd curriculum
+	$ git init
+	$ rails new . --git --database=postgresql -T
+	
+The -T flag tells rails to skip installing the unit testing framework.
+
+Set up the app to work with RSpec and Cucumber:
+
+Edit the Gemfile, adding a test group that looks like
+	group :test do
+		gem 'cucumber-rails' 
+		gem 'database_cleaner' 
+		gem 'rspec-rails'
+		gem 'factory_girl_rails'
+		gem 'populator'
+	end
+	
+	$ bundle install
+	$ rails generate rspec:install
+	$ rails generate cucumber:install
+	
+Push the baseline app up to github:
+
+	$ git add .
+	$ git commit -m "Initial commit"
+	$ git remote add origin git@github.com:UNMInformatics/UNM-Degree-Map.git
+	$ git push origin master
+	
+To make sure the testing framework is working, try the following:
+
+	$ rake db:migrate
+	$ rake db:test:prepare
+	$ rspec
+	$ cucumber
+
+Create a scaffolding (model, view and controller) for colleges:
+
+	$ rails generate scaffold college name:string acronym:string org_code:string
+	
+Create a scaffolding for departments:
+
+	$ rails generate scaffold dept college_id:integer name:string acronym:string org_code:string
+
+Create a scaffolding for storing undergraduate programs.  We could create a program scaffold instead, 
+and then store the type of the program (graduate or undergraduate) as a field in the table, but 
+decided to do it this way:
+
+	$ rails generate scaffold undergrad_program dept_id:integer name:string degree:string org_code:string
+
+Create a scaffolding for course:
+
+	$ rails generate scaffold course name:string crn:string credits:integer description:text short_description:text dept_id:integer 
+
+Create a model for storing the list of prerequisites and corequisites associated with a class.  It is assumed that each prereq. associated with a class is connected by an AND connector with the next prereq. in the list (unless the OR connector is true).  If the corequisite field is true, it can be :
+
+	$ rails generate model prerequisite course_id:integer prereq_id:integer corequisite:boolean strict_corequisite:boolean description:string or_connector:boolean
+
+Create a scaffolding for a degree plan for a program:
+
+	$ rails generate scaffold degree_plan undergrad_program_id:integer academic_year:string
+	
+Create a scaffolding for the notes associated with a degree plan:
+
+	$ rails generate scaffold degree_plan_notes degree_plan_id:integer note:string
+	
+Create a scaffold for the degree requirements associated with a degree:
+	
+	$ rails generate scaffold degree_requirement degree_plan_id:integer name:string category:string min_grade:string crucial:boolean note:string
+	
+Create a scaffold for a term plan:
+
+	$ rails generate scaffold term_plan degree_plan_id:integer term_number:integer
+	
+Create a join table between degree requirements and term plans:
+
+	$ rails generate model degree_requirements_term_plans degree_requirement_id:integer term_plan_id:integer
+	
+Create a join table between courses and degree_requirements:
+
+	$ rails generate model courses_degree_requirements course_id:integer degree_requirement_id:integer
+
+Now, create the appropriate relationships in the models:
+
+	class College < ActiveRecord::Base
+	  has_many :depts
+	end
+	
+	class Dept < ActiveRecord::Base
+	  belongs_to :college
+	  has_many :undergrad_programs
+	end
+	
+	class UndergradProgram < ActiveRecord::Base
+	  belongs_to :dept
+	end
+	
+	class DegreePlan < ActiveRecord::Base
+	  belongs_to :undergrad_program
+	end
+	
+	Etc., etc.
+	
+In ./db/schema.rb, fix up the join tables so records do not have a primary key:
+
+	create_table "degree_requirements_term_plans", :id => false, force: true do |t|
+	  t.integer  "degree_requirement_id",  :null => false
+	  t.integer  "term_plan_id",  :null => false
+	  t.datetime "created_at"
+	  t.datetime "updated_at"
+	end
+ 
+	
