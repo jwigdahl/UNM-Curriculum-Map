@@ -24,12 +24,14 @@ namespace :db do
     # ECE dept
     Dept.populate 1 do |ece|
       ece.college_id = College.where(:acronym => 'SOE')[0].id
+      ece.name = 'Electrical & Computer Engineering'
       ece.acronym = 'ECE'
       ece.org_code = 'B9650076'
     end
     # English dept
     Dept.populate 1 do |engl|
       engl.college_id = College.where(:acronym => 'AS')[0].id
+      engl.name = 'English'
       engl.acronym = 'ENGL'
       engl.org_code = 'B7650076'
     end

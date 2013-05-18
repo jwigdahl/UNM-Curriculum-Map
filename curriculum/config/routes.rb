@@ -10,7 +10,7 @@ Curriculum::Application.routes.draw do
   resources :degree_plans
 
   resources :undergrad_programs
-
+  
   resources :depts
 
   resources :colleges

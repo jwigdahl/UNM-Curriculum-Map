@@ -7,7 +7,6 @@ class CreateCourses < ActiveRecord::Migration
       t.text :description
       t.text :short_description
       t.integer :dept_id
-      t.integer :degree_requirement_id
 
       t.timestamps
     end
