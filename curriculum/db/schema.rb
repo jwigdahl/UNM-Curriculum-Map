@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130517153643) do
+ActiveRecord::Schema.define(version: 20130518171444) do
 
   create_table "colleges", force: true do |t|
     t.string   "name"
@@ -32,11 +32,9 @@ ActiveRecord::Schema.define(version: 20130517153643) do
     t.datetime "updated_at"
   end
 
-  create_table "courses_degree_requirements", force: true do |t|
-    t.integer  "course_id"
-    t.integer  "degree_requirement_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "courses_degree_requirements", id: false, force: true do |t|
+    t.integer "course_id",             null: false
+    t.integer "degree_requirement_id", null: false
   end
 
   create_table "degree_plan_notes", force: true do |t|
@@ -64,11 +62,9 @@ ActiveRecord::Schema.define(version: 20130517153643) do
     t.datetime "updated_at"
   end
 
-  create_table "degree_requirements_term_plans", force: true do |t|
-    t.integer  "degree_requirement_id"
-    t.integer  "term_plan_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "degree_requirements_term_plans", id: false, force: true do |t|
+    t.integer "degree_requirement_id", null: false
+    t.integer "term_plan_id",          null: false
   end
 
   create_table "depts", force: true do |t|
@@ -82,10 +78,11 @@ ActiveRecord::Schema.define(version: 20130517153643) do
 
   create_table "prerequisites", force: true do |t|
     t.integer  "course_id"
-    t.integer  "prereq_id"
+    t.integer  "prereq_course_id"
     t.boolean  "corequisite"
     t.boolean  "strict_corequisite"
     t.string   "description"
+    t.integer  "position"
     t.boolean  "or_connector"
     t.datetime "created_at"
     t.datetime "updated_at"

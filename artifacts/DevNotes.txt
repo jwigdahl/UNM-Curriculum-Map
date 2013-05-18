@@ -53,9 +53,9 @@ Create a scaffolding for course:
 
 	$ rails generate scaffold course name:string crn:string credits:integer description:text short_description:text dept_id:integer 
 
-Create a model for storing the list of prerequisites and corequisites associated with a class.  It is assumed that each prereq. associated with a class is connected by an AND connector with the next prereq. in the list (unless the OR connector is true).  If the corequisite field is true, it can be :
+Create a scaffold for storing the list of prerequisites and corequisites associated with a class.  It is assumed that each prereq. associated with a class is connected by an AND connector with the next prereq. in the list (unless the OR connector is true).  If the corequisite field is true, it can be :
 
-	$ rails generate model prerequisite course_id:integer prereq_id:integer corequisite:boolean strict_corequisite:boolean description:string or_connector:boolean
+	$ rails generate scaffold prerequisite course_id:integer prereq_id:integer corequisite:boolean strict_corequisite:boolean description:string position:integer or_connector:boolean
 
 Create a scaffolding for a degree plan for a program:
 
@@ -73,13 +73,13 @@ Create a scaffold for a term plan:
 
 	$ rails generate scaffold term_plan degree_plan_id:integer term_number:integer
 	
-Create a join table between degree requirements and term plans:
+Create a migration that will generate join table between degree requirements and term plans:
 
-	$ rails generate model degree_requirements_term_plans degree_requirement_id:integer term_plan_id:integer
+	$ rails g migration CreateJoinTableDegreeRequirementTermPlan degree_requirement term_plan
 	
-Create a join table between courses and degree_requirements:
+Create a migration that will generate a join table between courses and degree_requirements:
 
-	$ rails generate model courses_degree_requirements course_id:integer degree_requirement_id:integer
+	$ rails g migration CreateJoinTableCourseDegreeRequirement course degree_requirement
 
 Now, create the appropriate relationships in the models:
 

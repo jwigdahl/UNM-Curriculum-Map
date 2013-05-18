@@ -1,0 +1,39 @@
+<h1>Listing prerequisites</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Course</th>
+      <th>Prereq</th>
+      <th>Corequisite</th>
+      <th>Strict corequisite</th>
+      <th>Description</th>
+      <th>Position</th>
+      <th>Or connector</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @prerequisites.each do |prerequisite| %>
+      <tr>
+        <td><%= prerequisite.course_id %></td>
+        <td><%= prerequisite.prereq_id %></td>
+        <td><%= prerequisite.corequisite %></td>
+        <td><%= prerequisite.strict_corequisite %></td>
+        <td><%= prerequisite.description %></td>
+        <td><%= prerequisite.position %></td>
+        <td><%= prerequisite.or_connector %></td>
+        <td><%= link_to 'Show', prerequisite %></td>
+        <td><%= link_to 'Edit', edit_prerequisite_path(prerequisite) %></td>
+        <td><%= link_to 'Destroy', prerequisite, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Prerequisite', new_prerequisite_path %>

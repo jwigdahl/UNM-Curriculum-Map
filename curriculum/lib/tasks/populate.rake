@@ -3,8 +3,8 @@ namespace :db do
   task :populate => :environment do
     require 'populator'
 
-    [Course, DegreePlan, DegreeRequirement, DegreeRequirementsTermPlans, Dept, Prerequisite, TermPlan,
-      UndergradProgram].each(&:delete_all)
+    models = [College, Course, DegreePlan, DegreePlanNote, DegreeRequirement, Dept, Prerequisite, TermPlan, UndergradProgram]
+    models.each(&:destroy_all)
       
     # Populate college table
     # SOE
@@ -35,6 +35,13 @@ namespace :db do
       engl.acronym = 'ENGL'
       engl.org_code = 'B7650076'
     end
+    # Math dept
+    Dept.populate 1 do |math|
+      math.college_id = College.where(:acronym => 'AS')[0].id
+      math.name = 'Math'
+      math.acronym = 'MATH'
+      math.org_code = 'B7111076'
+    end
     
     # Populate course tables
     #ENGL 101
@@ -45,6 +52,7 @@ namespace :db do
       engl101.description = "Introduces students to many kinds of writing that are used in academic and professional 
       situations and helps students learn to analyze and address the differenc purposes and audiences they'll encounter 
       in their subsequent careers."
+      engl101.dept_id = Dept.where(:acronym => 'ENGL')[0].id
     end
     # ECE 101
     Course.populate 1 do |ece101|
@@ -53,6 +61,27 @@ namespace :db do
       ece101.credits = 1
       ece101.description = "Insigt into electrical engineering is gained through video, 'hands-on' experiments, use of computer
       software to learn basic problem-solving skills and a team-oriented design project."
+      ece101.dept_id = Dept.where(:acronym => 'ECE')[0].id
+    end
+    # Math 150
+    Course.populate 1 do |math150|
+      math150.name = 'Pre-Calculus Mathematics'
+      math150.crn = '380734'
+      math150.credits = 3
+      math150.description = "In depth study of polynomial, rational, exonential and logrithmic functions and their graphs.
+      Includes fundamental theorem of algebra, systems of equations, conic sections, parametric equations and applications 
+      in geometry. Exploring of the graphing calculator"
+      math150.dept_id = Dept.where(:acronym => 'MATH')[0].id
+    end
+    # Math 162
+    Course.populate 1 do |math162|
+      math162.name = 'Calculus I'
+      math162.crn = '396734'
+      math162.credits = 4
+      math162.description = "Derivative as a rate of change, intuitive, numerical and theoretical concepts, applications to 
+      graphing, linearization and optimization. Integral as a sum, relation between integral and derivative, and applications
+      of definite integral"
+      math162.dept_id = Dept.where(:acronym => 'MATH')[0].id
     end
     
     # Undergraduate Programs
@@ -72,7 +101,7 @@ namespace :db do
     end
     
     # Term Plans
-    # CompE Term 1 academic year 2013-14
+    # CompE Term 1 
     TermPlan.populate 1 do |tp|
       tp.degree_plan_id = DegreePlan.where(:id => UndergradProgram.where(:name => 'Computer Engineering')[0].id)[0].id
       tp.term_number = 1
@@ -87,8 +116,18 @@ namespace :db do
       dr.crucial = false
     end
     
-    # Degree Requirements Term Plans join table
-    # CompE
-    
+    # Prerequisities for Math 162
+    Prerequisite.populate 1 do |pre|  # this prereq is not a class
+      pre.course_id = Course.where(:crn => '396734')[0].id
+      pre.description = 'ACT=28-31 or SAT=640-700'
+      pre.position = 1
+      pre.or_connector = true
+    end
+    Prerequisite.populate 1 do |pre|  # this prereq. is a class
+      pre.course_id = Course.where(:crn => '396734')[0].id
+      pre.prereq_course_id = Course.where(:crn => '380734')[0].id
+      pre.position = 2
+    end
+  
   end
 end

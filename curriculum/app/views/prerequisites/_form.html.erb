@@ -1,0 +1,45 @@
+<%= form_for(@prerequisite) do |f| %>
+  <% if @prerequisite.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@prerequisite.errors.count, "error") %> prohibited this prerequisite from being saved:</h2>
+
+      <ul>
+      <% @prerequisite.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :course_id %><br>
+    <%= f.number_field :course_id %>
+  </div>
+  <div class="field">
+    <%= f.label :prereq_id %><br>
+    <%= f.number_field :prereq_id %>
+  </div>
+  <div class="field">
+    <%= f.label :corequisite %><br>
+    <%= f.check_box :corequisite %>
+  </div>
+  <div class="field">
+    <%= f.label :strict_corequisite %><br>
+    <%= f.check_box :strict_corequisite %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :position %><br>
+    <%= f.number_field :position %>
+  </div>
+  <div class="field">
+    <%= f.label :or_connector %><br>
+    <%= f.check_box :or_connector %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

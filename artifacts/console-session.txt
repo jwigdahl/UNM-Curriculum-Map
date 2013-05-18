@@ -1,0 +1,40 @@
+$ rails console
+Loading development environment (Rails 4.0.0.rc1)
+
+1.9.3p194 :001 > c = College.all
+  College Load (0.1ms)  SELECT "colleges".* FROM "colleges"
+ => [#<College id: 1, name: "School of Engineering", acronym: "SOE", org_code: "A9780876", created_at: "2013-05-18 19:05:38", updated_at: "2013-05-18 19:05:38">, #<College id: 2, name: "College of Arts & Sciences", acronym: "AS", org_code: "B8780776", created_at: "2013-05-18 19:05:38", updated_at: "2013-05-18 19:05:38">]
+
+1.9.3p194 :002 > c[0].depts
+  Dept Load (2.0ms)  SELECT "depts".* FROM "depts" WHERE "depts"."college_id" = ?  [["college_id", 1]]
+ => #<ActiveRecord::Associations::CollectionProxy [#<Dept id: 1, college_id: 1, name: "Electrical & Computer Engineering", acronym: "ECE", org_code: "B9650076", created_at: "2013-05-18 19:05:38", updated_at: "2013-05-18 19:05:38">]>
+
+1.9.3p194 :003 > c[0].depts[0].undergrad_programs
+  UndergradProgram Load (0.2ms)  SELECT "undergrad_programs".* FROM "undergrad_programs" WHERE "undergrad_programs"."dept_id" = ?  [["dept_id", 1]]
+ => #<ActiveRecord::Associations::CollectionProxy [#<UndergradProgram id: 1, dept_id: 1, name: "Computer Engineering", degree: "BS", org_code: "HJ897682", created_at: "2013-05-18 19:05:38", updated_at: "2013-05-18 19:05:38">]>
+
+1.9.3p194 :004 > c[0].depts[0].undergrad_programs[0].name
+ => "Computer Engineering"
+
+1.9.3p194 :005 > c[0].depts[0].undergrad_programs[0].degree_plans
+  DegreePlan Load (0.2ms)  SELECT "degree_plans".* FROM "degree_plans" WHERE "degree_plans"."undergrad_program_id" = ?  [["undergrad_program_id", 1]]
+ => #<ActiveRecord::Associations::CollectionProxy [#<DegreePlan id: 1, undergrad_program_id: 1, academic_year: "2013-14", created_at: "2013-05-18 19:05:38", updated_at: "2013-05-18 19:05:38">]>
+
+1.9.3p194 :006 > c[0].depts[0].undergrad_programs[0].degree_plans[0].term_plans
+  TermPlan Load (0.2ms)  SELECT "term_plans".* FROM "term_plans" WHERE "term_plans"."degree_plan_id" = ?  [["degree_plan_id", 1]]
+ => #<ActiveRecord::Associations::CollectionProxy [#<TermPlan id: 1, degree_plan_id: 1, term_number: 1, created_at: "2013-05-18 19:05:38", updated_at: "2013-05-18 19:05:38">]>
+
+1.9.3p194 :007 > c[0].depts[0].courses
+  Dept Load (1.9ms)  SELECT "depts".* FROM "depts" WHERE "depts"."college_id" = ?  [["college_id", 1]]
+  Course Load (0.1ms)  SELECT "courses".* FROM "courses" WHERE "courses"."dept_id" = ?  [["dept_id", 1]]
+ => #<ActiveRecord::Associations::CollectionProxy [#<Course id: 2, name: "Introduction to Electrical & Computer Engineering", crn: "297634", credits: 1, description: "Insigt into electrical engineering is gained throug...", short_description: nil, dept_id: 1, created_at: "2013-05-18 19:05:38", updated_at: "2013-05-18 19:05:38">]>
+
+1.9.3p194 :008 > c[0].depts[0].courses[0].description
+ => "Insigt into electrical engineering is gained through video, 'hands-on' experiments, use of computer\n      software to learn basic problem-solving skills and a team-oriented design project."
+
+1.9.3p194 :009 > c[1].depts[1].courses[1].prerequisites
+  Prerequisite Load (0.2ms)  SELECT "prerequisites".* FROM "prerequisites" WHERE "prerequisites"."course_id" = ?  [["course_id", 4]]
+ => #<ActiveRecord::Associations::CollectionProxy [#<Prerequisite id: 1, course_id: 4, prereq_course_id: nil, corequisite: nil, strict_corequisite: nil, description: "ACT=28-31 or SAT=640-700", position: 1, or_connector: true, created_at: "2013-05-18 19:05:38", updated_at: "2013-05-18 19:05:38">, #<Prerequisite id: 2, course_id: 4, prereq_course_id: 3, corequisite: nil, strict_corequisite: nil, description: nil, position: 2, or_connector: nil, created_at: "2013-05-18 19:05:38", updated_at: "2013-05-18 19:05:38">]>
+
+1.9.3p194 :010 > c[1].depts[1].courses[1].prerequisites.first
+ => #<Prerequisite id: 1, course_id: 4, prereq_course_id: nil, corequisite: nil, strict_corequisite: nil, description: "ACT=28-31 or SAT=640-700", position: 1, or_connector: true, created_at: "2013-05-18 19:05:38", updated_at: "2013-05-18 19:05:38">

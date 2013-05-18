@@ -1,5 +1,8 @@
 Curriculum::Application.routes.draw do
+  
   resources :courses
+  
+  resources :prerequisites
 
   resources :term_plans
 

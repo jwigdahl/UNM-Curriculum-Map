@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Course:</strong>
+  <%= @prerequisite.course_id %>
+</p>
+
+<p>
+  <strong>Prereq:</strong>
+  <%= @prerequisite.prereq_id %>
+</p>
+
+<p>
+  <strong>Corequisite:</strong>
+  <%= @prerequisite.corequisite %>
+</p>
+
+<p>
+  <strong>Strict corequisite:</strong>
+  <%= @prerequisite.strict_corequisite %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @prerequisite.description %>
+</p>
+
+<p>
+  <strong>Position:</strong>
+  <%= @prerequisite.position %>
+</p>
+
+<p>
+  <strong>Or connector:</strong>
+  <%= @prerequisite.or_connector %>
+</p>
+
+<%= link_to 'Edit', edit_prerequisite_path(@prerequisite) %> |
+<%= link_to 'Back', prerequisites_path %>

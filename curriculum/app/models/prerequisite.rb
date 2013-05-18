@@ -1,3 +1,4 @@
 class Prerequisite < ActiveRecord::Base
-  has_one :course
+  belongs_to :course
+  acts_as_list 
 end
